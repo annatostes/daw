@@ -80,6 +80,8 @@
     } else {
         echo "<h3>No one is currently registered.</h3>";
     }
+    $_POST['name']="";
+    $_POST['email']="";
 ?>
 </body>
 </html>

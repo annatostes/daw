@@ -41,9 +41,11 @@
     catch(Exception $e){
         die(var_dump($e));
     }
+    var enter = true;
     // Insert registration info
-    if(!empty($_POST)) {
+    if(!empty($_POST) && enter) {
     try {
+    	enter = false;
         $name = $_POST['name'];
         $email = $_POST['email'];
         $date = date("Y-m-d");
@@ -80,8 +82,6 @@
     } else {
         echo "<h3>No one is currently registered.</h3>";
     }
-    $_POST['name']="";
-    $_POST['email']="";
 ?>
 </body>
 </html>

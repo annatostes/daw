@@ -41,22 +41,28 @@
     catch(Exception $e){
         die(var_dump($e));
     }
-    var enter = true;
-    // Insert registration info
-    if(!empty($_POST) && enter) {
+
+	// Insert registration info
+    if(!empty($_POST)) {
     try {
-    	enter = false;
         $name = $_POST['name'];
         $email = $_POST['email'];
         $date = date("Y-m-d");
-        // Insert data
-        $sql_insert = "INSERT INTO registration_tbl (name, email, date) 
-                   VALUES (?,?,?)";
-        $stmt = $conn->prepare($sql_insert);
-        $stmt->bindValue(1, $name);
-        $stmt->bindValue(2, $email);
-        $stmt->bindValue(3, $date);
-        $stmt->execute();
+        // Check if user exists by email
+        $sql_select = "SELECT * FROM registration_tbl WHERE email = ?";
+	    $stmt = $conn->query($sql_select);
+	    $stmt->bindValue(1, $email);
+	    $registrants = $stmt->fetchAll(); 
+	    if(count($registrants) == 0) {
+	        // Insert data
+	        $sql_insert = "INSERT INTO registration_tbl (name, email, date) 
+	                   VALUES (?,?,?)";
+	        $stmt = $conn->prepare($sql_insert);
+	        $stmt->bindValue(1, $name);
+	        $stmt->bindValue(2, $email);
+	        $stmt->bindValue(3, $date);
+	        $stmt->execute();
+	    }
     }
     catch(Exception $e) {
         die(var_dump($e));

@@ -50,8 +50,7 @@
         $date = date("Y-m-d");
         // Check if user exists by email
         $sql_select = "SELECT * FROM registration_tbl WHERE email = ?";
-	    $stmt = $conn->query($sql_select);
-	    $stmt->bindValue(1, $email);
+	    $stmt = $conn->query($sql_select, $email);
 	    $registrants = $stmt->fetchAll(); 
 	    if(count($registrants) == 0) {
 	        // Insert data
